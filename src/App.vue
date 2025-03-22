@@ -8,7 +8,7 @@ import NavigationBar from './NavigationBar.vue'
     <img class="product__image" src="./assets/image-product-1.jpg" />
     <div class="product__info">
       <header>
-        <p class="product__brand">Sneaker Copany</p>
+        <p class="product__brand">Sneaker Company</p>
         <h1 class="product_name">Fall Limited Edition Sneakers</h1>
       </header>
       <p class="product__description">
@@ -20,7 +20,21 @@ import NavigationBar from './NavigationBar.vue'
         <span class="product__discount">50%</span>
         <p class="product__old-price">$250.00</p>
       </div>
-      <button class="product__button"><img src="./assets/icon-cart.svg" />Add to cart</button>
+      <div class="product__quantity">
+        <div>
+          <img src="./assets/icon-minus.svg" alt="Minus Icon" />
+        </div>
+        <input type="number" name="" id="" class="product__input" />
+        <div>
+          <img src="./assets/icon-plus.svg" alt="Plus Icon" />
+        </div>
+      </div>
+      <button class="product__button">
+        <svg viewBox="0 0 22 20">
+          <use xlink:href="./assets/icon-cart.svg#icon-cart" fill="black"></use>
+        </svg>
+        Add to cart
+      </button>
     </div>
   </div>
 </template>
@@ -41,11 +55,12 @@ body {
 }
 
 .product__info {
-  padding: 2rem;
+  padding: 1.8rem;
 }
 
 .product__brand {
   text-transform: uppercase;
+  letter-spacing: 0.15rem;
   font-weight: 700;
   color: hsl(219, 9%, 45%);
   margin: 0;
@@ -94,6 +109,28 @@ body {
   margin: 0;
 }
 
+.product__quantity {
+  background-color: hsl(223, 64%, 98%);
+  border-radius: 1rem;
+  display: flex;
+  padding: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.product__input {
+  border: none;
+  background-color: transparent;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  max-width: 75px;
+}
+
+.product__input:focus {
+  outline: none;
+}
+
 .product__button {
   font-family: inherit;
   width: 100%;
@@ -108,5 +145,9 @@ body {
   color: black;
   font-weight: 700;
   font-size: 1rem;
+}
+
+.product__button > svg {
+  height: 20px;
 }
 </style>
