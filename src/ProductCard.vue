@@ -1,15 +1,12 @@
 <template>
   <div class="product">
-    <ImageSlider :images="images" />
+    <ImageSlider :images="product.images" />
     <div class="product__info">
       <header>
-        <p class="product__brand">Sneaker Company</p>
-        <h1 class="product_name">Fall Limited Edition Sneakers</h1>
+        <p class="product__brand">{{ product.brand }}</p>
+        <h1 class="product_name">{{ product.name }}</h1>
       </header>
-      <p class="product__description">
-        These low-profile sneakers are your perfect casual wear companion. Featuring a durable
-        rubber outer sole, they’ll withstand everything the weather can offer.
-      </p>
+      <p class="product__description">{{ product.description }}</p>
       <div class="product__pricing">
         <h2 class="product__price">$125.00</h2>
         <span class="product__discount">50%</span>
@@ -24,7 +21,7 @@
           <img src="./assets/icon-plus.svg" alt="Plus Icon" @click="increase()" />
         </div>
       </div>
-      <button class="product__button">
+      <button class="product__button" @click="addToCart()">
         <svg viewBox="0 0 22 20">
           <use xlink:href="./assets/icon-cart.svg#icon-cart" fill="black"></use>
         </svg>
@@ -40,6 +37,21 @@ export default {
   data() {
     return {
       quantity: 0,
+      product: {
+        name: 'Fall Limited Edition Sneakers',
+        brand: 'Sneaker Company',
+        description: `These low-profile sneakers are your perfect casual wear companion. Featuring a durable
+        rubber outer sole, they’ll withstand everything the weather can offer.`,
+        price: 125,
+        discount: 50,
+        old_price: 250,
+        images: [
+          'src/assets/image-product-1.jpg',
+          'src/assets/image-product-2.jpg',
+          'src/assets/image-product-3.jpg',
+          'src/assets/image-product-4.jpg',
+        ],
+      },
       images: [
         'src/assets/image-product-1.jpg',
         'src/assets/image-product-2.jpg',
@@ -59,6 +71,15 @@ export default {
     },
     decrease() {
       if (this.quantity > 0) this.quantity--
+    },
+    addToCart() {
+      this.$cart.push({
+        uuid: self.crypto.randomUUID(),
+        name: this.product.name,
+        quantity: this.quantity,
+        price: this.product.price,
+        image: this.product.images[0],
+      })
     },
   },
 }

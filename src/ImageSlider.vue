@@ -1,11 +1,11 @@
 <template>
   <div class="product__images">
     <img class="product__image" :src="images[index]" />
-    <button class="image__button image__button--previous">
-      <img src="./assets/icon-previous.svg" alt="Previous Icon" @click="back()" />
+    <button class="image__button image__button--previous" @click="back()">
+      <img src="./assets/icon-previous.svg" alt="Previous Icon" />
     </button>
-    <button class="image__button image__button--next">
-      <img src="./assets/icon-next.svg" alt="Next Icon" @click="next()" />
+    <button class="image__button image__button--next" @click="next()">
+      <img src="./assets/icon-next.svg" alt="Next Icon" />
     </button>
   </div>
 </template>
