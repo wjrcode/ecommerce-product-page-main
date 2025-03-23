@@ -1,42 +1,11 @@
 <script setup>
 import NavigationBar from './NavigationBar.vue'
+import Product from './ProductCard.vue'
 </script>
 
 <template>
   <NavigationBar />
-  <div class="product">
-    <img class="product__image" src="./assets/image-product-1.jpg" />
-    <div class="product__info">
-      <header>
-        <p class="product__brand">Sneaker Company</p>
-        <h1 class="product_name">Fall Limited Edition Sneakers</h1>
-      </header>
-      <p class="product__description">
-        These low-profile sneakers are your perfect casual wear companion. Featuring a durable
-        rubber outer sole, they’ll withstand everything the weather can offer.
-      </p>
-      <div class="product__pricing">
-        <h2 class="product__price">$125.00</h2>
-        <span class="product__discount">50%</span>
-        <p class="product__old-price">$250.00</p>
-      </div>
-      <div class="product__quantity">
-        <div>
-          <img src="./assets/icon-minus.svg" alt="Minus Icon" />
-        </div>
-        <input type="number" name="" id="" class="product__input" />
-        <div>
-          <img src="./assets/icon-plus.svg" alt="Plus Icon" />
-        </div>
-      </div>
-      <button class="product__button">
-        <svg viewBox="0 0 22 20">
-          <use xlink:href="./assets/icon-cart.svg#icon-cart" fill="black"></use>
-        </svg>
-        Add to cart
-      </button>
-    </div>
-  </div>
+  <Product />
 </template>
 
 <style>
@@ -145,6 +114,7 @@ body {
   color: black;
   font-weight: 700;
   font-size: 1rem;
+  box-shadow: 0 40px 50px hsla(26, 100%, 55%, 0.268);
 }
 
 .product__button > svg {
