@@ -73,7 +73,7 @@ export default {
       if (this.quantity > 0) this.quantity--
     },
     addToCart() {
-      this.$cart.push({
+      this.$cart.addItem({
         uuid: self.crypto.randomUUID(),
         name: this.product.name,
         quantity: this.quantity,

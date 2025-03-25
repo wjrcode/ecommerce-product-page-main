@@ -12,6 +12,7 @@
         <svg width="22" height="20" @click="openDialog">
           <use xlink:href="./assets/icon-cart.svg#icon-cart" fill="hsl(219, 9%, 45%)"></use>
         </svg>
+        <span v-if="totalItems" class="nav_quantity-cart">{{ totalItems }}</span>
         <CartDialog :showModal="showModal" @closeDialog="closeDialog" />
       </div>
       <img class="nav-avatar" src="./assets/image-avatar.png" />
@@ -23,15 +24,20 @@
 import MenuDialog from './MenuDialog.vue'
 import CartDialog from './CartDialog.vue'
 export default {
+  components: {
+    MenuDialog,
+    CartDialog,
+  },
   data() {
     return {
       showModal: false,
       showMenu: false,
     }
   },
-  components: {
-    MenuDialog,
-    CartDialog,
+  computed: {
+    totalItems() {
+      return this.$cart.quantity
+    },
   },
   methods: {
     openDialog() {
@@ -70,11 +76,22 @@ export default {
 
 .nav-avatar {
   width: 24px;
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
 .nav__cart {
   position: relative;
   display: inline-block;
+}
+
+.nav_quantity-cart {
+  position: absolute;
+  background-color: hsl(26, 100%, 55%);
+  color: white;
+  padding: 0 0.35rem;
+  border-radius: 0.5rem;
+  font-size: 0.5rem;
+  left: 0.7rem;
+  top: -0.2rem;
 }
 </style>

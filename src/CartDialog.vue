@@ -4,9 +4,9 @@
     <div class="cart__content">
       <h3 class="cart__header">Cart</h3>
       <hr />
-      <p></p>
-      <ul class="cart__items">
-        <li v-for="item in this.cart" :key="item.uuid" class="cart__item">
+      <p v-if="this.$cart.items.length == 0" class="cart_empty">Your cart is empty</p>
+      <ul v-else class="cart__items">
+        <li v-for="item in this.cart.items" :key="item.uuid" class="cart__item">
           <img :src="item.image" alt="Product Image" class="cart__item-image" />
           <div class="cart__item-details">
             <p>{{ item.name }}</p>
@@ -32,23 +32,17 @@ export default {
   props: {
     showModal: Boolean,
   },
-  data() {
-    return {
-      cart: this.$cart,
-    }
+  computed: {
+    cart() {
+      return this.$cart
+    },
   },
   methods: {
     closeDialog() {
       this.$emit('closeDialog')
     },
     removeItem(uuid) {
-      this.cart = this.cart.filter((item) => item.uuid != uuid)
-      this.$cart.splice(0, this.$cart.length, ...this.cart)
-    },
-  },
-  watch: {
-    showModal() {
-      if (this.showModal) this.cart = this.$cart
+      this.$cart.removeItem(uuid)
     },
   },
 }
@@ -87,7 +81,17 @@ export default {
 hr {
   margin-left: -1.5rem;
   margin-right: -1.5rem;
+  margin-top: 1.5rem;
   border-top: 1px solid hsl(223, 64%, 98%);
+}
+
+.cart_empty {
+  display: flex;
+  min-height: 160px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: hsl(219, 9%, 45%);
 }
 
 .cart__items {
