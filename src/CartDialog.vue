@@ -5,32 +5,41 @@
       <h3 class="cart__header">Cart</h3>
       <hr />
       <p v-if="this.$cart.items.length == 0" class="cart_empty">Your cart is empty</p>
-      <ul v-else class="cart__items">
-        <li v-for="item in this.cart.items" :key="item.uuid" class="cart__item">
-          <img :src="item.image" alt="Product Image" class="cart__item-image" />
-          <div class="cart__item-details">
-            <p>{{ item.name }}</p>
-            <div class="cart__item-prices">
-              <p>{{ item.price }} x {{ item.quantity }}</p>
-              <p>{{ item.price * item.quantity }}</p>
+      <div v-else>
+        <ul class="cart__items">
+          <li v-for="item in this.cart.items" :key="item.uuid" class="cart__item">
+            <img :src="item.image" alt="Product Image" class="cart__item-image" />
+            <div class="cart__item-details">
+              <p>{{ item.name }}</p>
+              <div class="cart__item-prices">
+                <p>{{ formatMoney(item.price) }} x {{ item.quantity }}</p>
+                <p class="cart__total-item">{{ formatMoney(item.price * item.quantity) }}</p>
+              </div>
             </div>
-          </div>
-          <img
-            @click="removeItem(item.uuid)"
-            src="./assets/icon-delete.svg"
-            alt="Delete Icon"
-            class="cart__delete-button"
-          />
-        </li>
-      </ul>
+            <img
+              @click="removeItem(item.uuid)"
+              src="./assets/icon-delete.svg"
+              alt="Delete Icon"
+              class="cart__delete-button"
+            />
+          </li>
+        </ul>
+        <ButtonDefault @action="() => {}" label="Checkout" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import ButtonDefault from './ButtonDefault.vue'
+import { formatMoney } from '@/utils/helpers'
+
 export default {
   props: {
     showModal: Boolean,
+  },
+  components: {
+    ButtonDefault,
   },
   computed: {
     cart() {
@@ -44,6 +53,7 @@ export default {
     removeItem(uuid) {
       this.$cart.removeItem(uuid)
     },
+    formatMoney,
   },
 }
 </script>
@@ -96,6 +106,7 @@ hr {
 
 .cart__items {
   list-style-type: none;
+  margin-bottom: 2rem;
   padding: 0;
 }
 
@@ -111,6 +122,10 @@ hr {
   margin: 0;
 }
 
+.cart__item-details {
+  color: hsl(219, 9%, 45%);
+}
+
 .cart__item-image {
   width: 50px;
   height: 50px;
@@ -120,6 +135,12 @@ hr {
 .cart__item-prices {
   display: flex;
   margin-top: 0.5rem;
+  gap: 0.4rem;
+}
+
+.cart__total-item {
+  color: black;
+  font-weight: 700;
 }
 
 .cart__delete-button {

@@ -8,9 +8,9 @@
       </header>
       <p class="product__description">{{ product.description }}</p>
       <div class="product__pricing">
-        <h2 class="product__price">$125.00</h2>
+        <h2 class="product__price">{{ formatMoney(product.price) }}</h2>
         <span class="product__discount">50%</span>
-        <p class="product__old-price">$250.00</p>
+        <p class="product__old-price">{{ formatMoney(product.old_price) }}</p>
       </div>
       <div class="product__quantity">
         <div>
@@ -21,22 +21,26 @@
           <img src="./assets/icon-plus.svg" alt="Plus Icon" @click="increase()" />
         </div>
       </div>
-      <button class="product__button" @click="addToCart()">
-        <svg viewBox="0 0 22 20">
-          <use xlink:href="./assets/icon-cart.svg#icon-cart" fill="black"></use>
-        </svg>
-        Add to cart
-      </button>
+      <ButtonDefault @action="addToCart" label="Add to cart" shadow>
+        <template v-slot:icon>
+          <svg width="22" height="20">
+            <use xlink:href="./assets/icon-cart.svg#icon-cart" fill="black"></use>
+          </svg>
+        </template>
+      </ButtonDefault>
     </div>
   </div>
 </template>
 
 <script>
 import ImageSlider from './ImageSlider.vue'
+import ButtonDefault from './ButtonDefault.vue'
+import { formatMoney } from '@/utils/helpers'
+
 export default {
   data() {
     return {
-      quantity: 0,
+      quantity: 1,
       product: {
         name: 'Fall Limited Edition Sneakers',
         brand: 'Sneaker Company',
@@ -63,14 +67,16 @@ export default {
 
   components: {
     ImageSlider,
+    ButtonDefault,
   },
 
   methods: {
+    formatMoney,
     increase() {
       this.quantity++
     },
     decrease() {
-      if (this.quantity > 0) this.quantity--
+      if (this.quantity > 1) this.quantity--
     },
     addToCart() {
       this.$cart.addItem({
@@ -86,6 +92,11 @@ export default {
 </script>
 
 <style scoped>
+.product {
+  display: flex;
+  flex-direction: column;
+}
+
 .product__info {
   padding: 1.8rem;
 }
@@ -163,24 +174,12 @@ export default {
   outline: none;
 }
 
-.product__button {
-  font-family: inherit;
-  width: 100%;
-  background-color: hsl(26, 100%, 55%);
-  border: none;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  color: black;
-  font-weight: 700;
-  font-size: 1rem;
-  box-shadow: 0 40px 50px hsla(26, 100%, 55%, 0.268);
-}
-
-.product__button > svg {
-  height: 20px;
+@media (min-width: 1000px) {
+  .product {
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
 }
 </style>
